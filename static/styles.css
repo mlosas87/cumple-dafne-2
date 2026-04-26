@@ -1,0 +1,574 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700&family=Fredoka:wght@500;600;700;800&family=Patrick+Hand&display=swap');
+
+html { scroll-behavior: smooth; }
+
+::selection {
+  background: var(--primary, #00b0e5);
+  color: white;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--primary, #00b0e5);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:root {
+  --primary: #00b0e5;
+  --primary-dark: #0090c0;
+  --accent: #ffb300;
+  --accent-soft: #ffc107;
+  --cta: #f15a24;
+  --cta-dark: #d94b1a;
+  --ink: #212529;
+  --ink-soft: #555;
+  --paper: #ffffff;
+  --paper-warm: #fffbf5;
+  --accent-bg: #fffaf0;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-light: #e5e7eb;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+}
+
+/* Ocultar barra superior blanca de Streamlit para que no corte el fondo */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Baloo 2', sans-serif !important;
+    color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
+    font-family: 'Fredoka', sans-serif !important;
+}
+
+/* Tarjeta central */
+@keyframes fadePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.main .block-container {
+    background-color: var(--paper) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 48px 36px !important;
+    margin-top: 2rem !important;
+    margin-bottom: 3rem !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: 1px solid var(--border) !important;
+    max-width: 480px !important;
+    animation: fadePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@media (max-width: 480px) {
+    .main .block-container {
+        padding: 40px 24px !important;
+        max-width: 420px !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 2rem !important;
+    }
+}
+
+/* Títulos y textos */
+.decoracion {
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    color: var(--accent);
+}
+.decoracion svg {
+    width: 80px;
+    height: auto;
+}
+
+.title-container {
+    background: linear-gradient(135deg, #00b0e5 0%, #29c0f0 100%);
+    border-radius: var(--radius-pill);
+    padding: 10px 40px;
+    display: inline-block;
+    margin: 0 auto;
+    box-shadow: 0 8px 24px rgba(0, 176, 229, 0.35);
+}
+
+.titulo-dafne {
+    color: white !important;
+    font-size: clamp(3rem, 12vw, 4.5rem) !important;
+    font-family: 'Fredoka', sans-serif !important;
+    text-align: center;
+    line-height: 1;
+    margin: 0;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.08);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.subtitulo {
+    color: var(--ink) !important;
+    font-size: clamp(2rem, 7vw, 2.8rem) !important;
+    font-family: 'Patrick Hand', cursive !important;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: var(--space-lg);
+    line-height: 1;
+    transform: rotate(-2deg);
+}
+
+/* Separador ondulado */
+.wave-divider {
+    margin: var(--space-md) auto;
+    text-align: center;
+}
+.wave-divider svg {
+    width: 100px;
+    height: 15px;
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+/* Información del lugar y fecha */
+.info-section {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+.salon { 
+    color: var(--primary); 
+    font-size: 0.85rem; 
+    font-weight: 700; 
+    line-height: 1;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-family: 'Baloo 2', sans-serif;
+}
+.salon-nombre { 
+    color: var(--accent); 
+    font-size: clamp(1.8rem, 6vw, 2.4rem); 
+    font-weight: 800; 
+    line-height: 1.05; 
+    font-family: 'Fredoka', sans-serif;
+}
+.salon-dir { 
+    color: var(--ink-soft); 
+    font-size: 1.1rem; 
+    margin-top: 8px;
+    margin-bottom: var(--space-md);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.salon-dir svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--primary);
+}
+
+.fecha-box {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 16px;
+    margin: var(--space-lg) 0;
+}
+.fecha-col {
+    text-align: center;
+    line-height: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 24px;
+    background-color: var(--paper-warm);
+    flex: 1;
+}
+.fecha-col span.num {
+    display: block;
+    font-size: 3.2rem;
+    font-weight: 800;
+    font-family: 'Fredoka', sans-serif !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.fecha-col span.txt {
+    display: block;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    margin-top: 4px;
+}
+.fecha-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fecha-divider::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    display: block;
+}
+
+@media (max-width: 380px) {
+    .fecha-box {
+        gap: 8px;
+    }
+    .fecha-col {
+        padding: 12px 16px;
+    }
+    .fecha-col span.num {
+        font-size: 2.6rem;
+    }
+}
+
+/* Cuenta regresiva */
+.countdown-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: var(--space-lg) 0;
+}
+.cd-box {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border-radius: var(--radius-md);
+    padding: 12px 0;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cd-num {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 1;
+}
+.cd-lbl {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    opacity: 0.9;
+}
+.cd-finished {
+    background: var(--accent-soft);
+    color: var(--ink);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: var(--shadow-sm);
+    margin: var(--space-lg) 0;
+}
+
+@media (max-width: 380px) {
+    .countdown-wrapper {
+        gap: 8px;
+    }
+    .cd-box {
+        padding: 10px 0;
+    }
+    .cd-num {
+        font-size: 1.5rem;
+    }
+    .cd-lbl {
+        font-size: 0.65rem;
+        letter-spacing: 0.05em;
+    }
+}
+
+/* CTA Confirmar Asistencia */
+@keyframes pulse-soft {
+    0% { transform: scale(1); box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45); }
+    50% { transform: scale(1.02); box-shadow: 0 12px 28px rgba(255, 193, 7, 0.55); }
+    100% { transform: scale(1); box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45); }
+}
+
+.destacado {
+    background: var(--accent-soft);
+    color: var(--ink);
+    padding: 16px 28px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: var(--space-md) auto 0;
+    display: inline-block;
+    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45);
+    animation: pulse-soft 2.5s ease-in-out infinite;
+}
+.destacado-sub {
+    display: block;
+    font-size: 0.85em; 
+    font-weight: 500;
+    margin-top: 4px;
+    opacity: 0.9;
+}
+
+/* Formularios */
+div[data-testid="stTextInput"] label p {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--ink) !important;
+    margin-bottom: 8px !important;
+}
+
+div[data-baseweb="input"] {
+    border-radius: var(--radius-md) !important;
+    border: 2px solid var(--border-light) !important;
+    background-color: var(--paper) !important;
+    padding: 14px 18px !important;
+    transition: all 0.2s ease;
+}
+div[data-baseweb="input"] input {
+    font-size: 17px !important;
+    color: var(--ink) !important;
+    font-family: 'Baloo 2', sans-serif !important;
+}
+div[data-baseweb="input"]:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px rgba(0, 176, 229, 0.15) !important;
+}
+
+/* Radio buttons estilizados como cards SÍ / NO */
+div[data-testid="stRadio"] > label p,
+div[data-testid="stRadio"] > div > label p {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--ink) !important;
+    margin-bottom: 8px !important;
+}
+
+/* Grid 2 columnas — selectores con y sin stRadio wrapper según versión de Streamlit */
+div[data-testid="stRadio"] > div[role="radiogroup"],
+.stRadio > div[role="radiogroup"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    width: 100% !important;
+    flex-direction: unset !important;
+    align-items: unset !important;
+}
+
+/* Cada opción: card ancha centrada */
+div[data-testid="stRadio"] > div[role="radiogroup"] > label,
+div[data-testid="stRadio"] label,
+.stRadio > div[role="radiogroup"] > label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-height: 50px !important;
+    padding: 12px 8px !important;
+    border: 1.5px solid var(--border-light) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--paper) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    flex: unset !important;
+}
+
+/* Texto: una sola línea, sin romper */
+div[data-testid="stRadio"] label > div:last-child,
+.stRadio > div[role="radiogroup"] > label > div:last-child {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--ink-soft) !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+}
+
+/* Ocultar círculo nativo del radio */
+div[data-testid="stRadio"] label > div:first-child,
+div[data-testid="stRadio"] label div[data-baseweb="radio"],
+.stRadio > div[role="radiogroup"] > label div[data-baseweb="radio"] {
+    display: none !important;
+}
+
+/* Seleccionado: card azul, texto blanco */
+div[data-testid="stRadio"] label:has(input:checked),
+.stRadio > div[role="radiogroup"] > label[data-checked="true"] {
+    border-color: var(--primary) !important;
+    background: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 176, 229, 0.25) !important;
+}
+div[data-testid="stRadio"] label:has(input:checked) > div:last-child,
+.stRadio > div[role="radiogroup"] > label[data-checked="true"] div {
+    color: white !important;
+}
+
+/* Hover en opción no seleccionada */
+div[data-testid="stRadio"] label:hover:not(:has(input:checked)),
+.stRadio > div[role="radiogroup"] > label:hover {
+    border-color: var(--primary) !important;
+    background: #f0fbff !important;
+}
+
+/* Form Submit Button */
+div[data-testid="stFormSubmitButton"] {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-md);
+}
+div[data-testid="stFormSubmitButton"] button {
+    background: linear-gradient(135deg, #ff6b3d 0%, #f15a24 100%) !important;
+    color: white !important;
+    border-radius: var(--radius-pill) !important;
+    font-size: 1.5rem !important;
+    font-family: 'Fredoka', sans-serif !important;
+    font-weight: 700 !important;
+    padding: 16px 24px !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+    width: 100% !important;
+    box-shadow: 0 10px 24px rgba(241, 90, 36, 0.35) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+div[data-testid="stFormSubmitButton"] button:hover {
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 0 14px 32px rgba(241, 90, 36, 0.45) !important;
+}
+div[data-testid="stFormSubmitButton"] button:active {
+    transform: translateY(0) scale(1) !important;
+    box-shadow: 0 6px 16px rgba(241, 90, 36, 0.3) !important;
+}
+
+/* Footer */
+.footer-custom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+    text-align: right;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    margin-top: 28px;
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 500;
+    font-family: 'Baloo 2', sans-serif;
+}
+.footer-custom a {
+    color: #25D366;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: 600;
+}
+.footer-custom a:hover {
+    text-decoration: underline;
+}
+
+/* Alertas y Feedbacks (st.success, st.error) */
+div[data-testid="stAlert"] {
+    border-radius: var(--radius-md) !important;
+    border: none !important;
+    box-shadow: var(--shadow-sm) !important;
+    padding: 16px 20px !important;
+    font-weight: 500 !important;
+    font-family: 'Baloo 2', sans-serif !important;
+}
+/* Success */
+div[data-testid="stAlert"]:has(.st-emotion-cache-121o1ev) { /* Streamlit usa clases dinámicas, pero data-testid="stAlert" + contenido interno funciona. Mejor usamos la variable de CSS inyectada por st. */ }
+.stAlert {
+    border-radius: var(--radius-md) !important;
+}
+
+/* Custom Success (inyectado) */
+.success-card {
+    background: #e8f5e9;
+    border: 2px solid #a5d6a7;
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: center;
+    color: #2e7d32;
+    animation: fadePop 0.4s ease-out;
+}
+.success-icon svg {
+    width: 64px;
+    height: 64px;
+    stroke: #4caf50;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    margin-bottom: 12px;
+}
+.success-icon .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+    animation: dash 0.9s ease-in-out;
+}
+@keyframes dash {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+.success-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.success-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Botón ghost — "Agregar al calendario" */
+div[data-testid="stDownloadButton"] button {
+    background: transparent !important;
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+    border-radius: var(--radius-pill) !important;
+    font-family: 'Baloo 2', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 10px 24px !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+    margin-bottom: 4px !important;
+}
+div[data-testid="stDownloadButton"] button:hover {
+    background: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 6px 16px rgba(0, 176, 229, 0.25) !important;
+}
