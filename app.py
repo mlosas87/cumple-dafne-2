@@ -222,26 +222,7 @@ else:
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='50' cy='42' rx='28' ry='36' fill='%2300b0e5'/%3E%3Cpath d='M50 78 Q53 86 50 96' stroke='%230090c0' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cellipse cx='40' cy='30' rx='8' ry='5' fill='white' opacity='0.25' transform='rotate(-30 40 30)'/%3E%3C/svg%3E">
 """, unsafe_allow_html=True)
 
-    def generate_ics() -> bytes:
-        today = datetime.date.today()
-        event_date = datetime.date(2026, 6, 6)
-        if today > event_date:
-            event_date = datetime.date(2027, 6, 6)
-        year = event_date.year
-        now_utc = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
-        return f"""BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//CumpleDafne//ES
-BEGIN:VEVENT
-UID:cumple-dafne-{year}@invitacion
-DTSTAMP:{now_utc}
-DTSTART;TZID=America/Argentina/Buenos_Aires:{year}0606T100000
-DTEND;TZID=America/Argentina/Buenos_Aires:{year}0606T130000
-SUMMARY:Cumpleaños de Dafne (2 años)
-LOCATION:Salón Hakuna Matata, Av. Marconi 49, Resistencia
-DESCRIPTION:Te esperamos para festejar los 2 años de Dafne
-END:VEVENT
-END:VCALENDAR""".encode("utf-8")
+
 
     def render_hero():
         return """
@@ -333,25 +314,7 @@ updateCountdown();
 """
     st.markdown(render_hero(), unsafe_allow_html=True)
 
-    # Mapa del salón
-    st.markdown("""
-<div style="margin: 0 0 20px;">
-<iframe
-  src="https://www.google.com/maps?q=Av.+Marconi+49,+Resistencia,+Chaco,+Argentina&output=embed"
-  width="100%" height="220"
-  style="border:0; border-radius:20px; box-shadow:0 8px 24px rgba(0,0,0,0.08); display:block;"
-  loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-""", unsafe_allow_html=True)
 
-    # Botón agregar al calendario
-    st.download_button(
-        label="📅 Agregar a mi calendario",
-        data=generate_ics(),
-        file_name="cumple-dafne.ics",
-        mime="text/calendar",
-        use_container_width=True,
-    )
 
     with st.form("rsvp_form"):
         family_name = st.text_input("Nombre de familia (Ej: Familia García)")
