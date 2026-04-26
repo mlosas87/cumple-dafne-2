@@ -26,6 +26,7 @@ html { scroll-behavior: smooth; }
   --accent-soft: #ffc107;
   --cta: #f15a24;
   --cta-dark: #d94b1a;
+  
   --ink: #212529;
   --ink-soft: #555;
   --paper: #ffffff;
@@ -33,9 +34,12 @@ html { scroll-behavior: smooth; }
   --accent-bg: #fffaf0;
   --border: rgba(0, 0, 0, 0.08);
   --border-light: #e5e7eb;
+  --bg-overlay: rgba(255, 255, 255, 0.55);
+  
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
   --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
   --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+  
   --radius-sm: 12px;
   --radius-md: 20px;
   --radius-lg: 28px;
@@ -46,6 +50,8 @@ html { scroll-behavior: smooth; }
   --space-lg: 32px;
   --space-xl: 48px;
 }
+
+
 
 /* Ocultar barra superior blanca de Streamlit para que no corte el fondo */
 header[data-testid="stHeader"] {
@@ -61,36 +67,48 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
     font-family: 'Fredoka', sans-serif !important;
 }
 
-/* Tarjeta central */
-@keyframes fadePop {
+
+
+/* Tarjeta central - Animación de Entrada */
+@keyframes fadeInSlideUp {
   0% {
     opacity: 0;
-    transform: scale(0.94) translateY(20px);
+    transform: translateY(40px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
   }
 }
 
 .main .block-container {
     background-color: var(--paper) !important;
     border-radius: var(--radius-lg) !important;
-    padding: 48px 36px !important;
-    margin-top: 2rem !important;
+    padding: 20px 36px 48px !important; /* Mucho menos padding arriba */
+    margin-top: 0rem !important; /* Subimos el contenedor principal */
     margin-bottom: 3rem !important;
     box-shadow: var(--shadow-lg) !important;
     border: 1px solid var(--border) !important;
     max-width: 480px !important;
-    animation: fadePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: fadeInSlideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Forzar que Streamlit no empuje el contenido hacia abajo */
+div[data-testid="stAppViewBlockContainer"] {
+    padding-top: 1rem !important;
 }
 
 @media (max-width: 480px) {
     .main .block-container {
-        padding: 40px 24px !important;
+        padding: 16px 24px 40px !important;
         max-width: 420px !important;
-        margin-top: 1.5rem !important;
+        margin-top: 0 !important;
         margin-bottom: 2rem !important;
+    }
+    div[data-testid="stAppViewBlockContainer"] {
+        padding-top: 0.5rem !important;
     }
 }
 
@@ -105,25 +123,46 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
     height: auto;
 }
 
+@keyframes stickerWiggle {
+    0%, 100% { transform: rotate(-3deg) scale(1); }
+    50% { transform: rotate(3deg) scale(1.05); }
+}
+
 .title-container {
-    background: linear-gradient(135deg, #00b0e5 0%, #29c0f0 100%);
-    border-radius: var(--radius-pill);
-    padding: 10px 40px;
-    display: inline-block;
+    padding: 0px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto;
-    box-shadow: 0 8px 24px rgba(0, 176, 229, 0.35);
+    background: transparent;
 }
 
 .titulo-dafne {
-    color: white !important;
-    font-size: clamp(3rem, 12vw, 4.5rem) !important;
+    font-size: clamp(5rem, 22vw, 8rem) !important; /* Agrandado dramáticamente */
     font-family: 'Fredoka', sans-serif !important;
     text-align: center;
-    line-height: 1;
+    line-height: 0.9; /* Más junto aún */
     margin: 0;
-    text-shadow: 0 2px 0 rgba(0,0,0,0.08);
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-weight: 800; /* Más grueso */
+    letter-spacing: 0.01em;
+    
+    /* Gradiente como relleno de texto */
+    background: linear-gradient(135deg, #ff6584 0%, #ff3b62 100%, #ffb300 200%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    
+    /* Borde grueso estilo calcomanía */
+    -webkit-text-stroke: 8px white; /* Borde más grueso para compensar el tamaño mayor */
+    paint-order: stroke fill;
+    
+    /* Sombra de despegue (drop-shadow realza la transparencia del texto) */
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.3));
+    
+    /* Animación extra: balanceo y escala */
+    display: inline-block;
+    animation: stickerWiggle 3s ease-in-out infinite;
+    transform-origin: center;
 }
 
 .subtitulo {
@@ -131,15 +170,14 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
     font-size: clamp(2rem, 7vw, 2.8rem) !important;
     font-family: 'Patrick Hand', cursive !important;
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: var(--space-lg);
+    margin-top: -15px; /* Lo acercamos mucho más a DAFNE */
+    margin-bottom: 12px;
     line-height: 1;
-    transform: rotate(-2deg);
 }
 
 /* Separador ondulado */
 .wave-divider {
-    margin: var(--space-md) auto;
+    margin: 10px auto;
     text-align: center;
 }
 .wave-divider svg {
@@ -202,13 +240,13 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
     line-height: 1;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 16px 24px;
+    padding: 10px 16px;
     background-color: var(--paper-warm);
     flex: 1;
 }
 .fecha-col span.num {
     display: block;
-    font-size: 3.2rem;
+    font-size: 2.2rem;
     font-weight: 800;
     font-family: 'Fredoka', sans-serif !important;
     text-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -216,7 +254,7 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
 .fecha-col span.txt {
     display: block;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: var(--ink-soft);
     margin-top: 4px;
 }
@@ -239,10 +277,10 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
         gap: 8px;
     }
     .fecha-col {
-        padding: 12px 16px;
+        padding: 8px 12px;
     }
     .fecha-col span.num {
-        font-size: 2.6rem;
+        font-size: 1.8rem;
     }
 }
 
@@ -310,88 +348,110 @@ h1, h2, h3, h4, h5, h6, .st-emotion-cache-10trblm {
 }
 
 /* CTA Confirmar Asistencia */
-@keyframes pulse-soft {
-    0% { transform: scale(1); box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45); }
-    50% { transform: scale(1.02); box-shadow: 0 12px 28px rgba(255, 193, 7, 0.55); }
-    100% { transform: scale(1); box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45); }
+@keyframes pulse-strong {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 179, 0, 0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 179, 0, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 179, 0, 0); }
 }
 
 .destacado {
-    background: var(--accent-soft);
-    color: var(--ink);
-    padding: 16px 28px;
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: #212529; /* Siempre oscuro en el CTA amarillo */
+    padding: 22px 36px;
     border-radius: var(--radius-pill);
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: 800;
+    font-size: 1.4rem;
     margin: var(--space-md) auto 0;
     display: inline-block;
-    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.45);
-    animation: pulse-soft 2.5s ease-in-out infinite;
+    box-shadow: 0 8px 24px rgba(255, 179, 0, 0.5);
+    animation: pulse-strong 2s infinite;
+    border: 3px solid #fff;
+    cursor: default;
 }
 .destacado-sub {
     display: block;
-    font-size: 0.85em; 
-    font-weight: 500;
-    margin-top: 4px;
+    font-size: 0.8rem; 
+    font-weight: 600;
+    margin-top: 6px;
     opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Formularios */
-div[data-testid="stTextInput"] label p {
+div[data-testid="stTextInput"] label p,
+div[data-testid="stTextArea"] label p {
     font-size: 16px !important;
     font-weight: 700 !important;
     color: var(--ink) !important;
     margin-bottom: 8px !important;
+    text-align: center !important;
+    width: 100% !important;
 }
 
-div[data-baseweb="input"] {
+div[data-baseweb="input"],
+div[data-baseweb="textarea"] {
     border-radius: var(--radius-md) !important;
     border: 2px solid var(--border-light) !important;
     background-color: var(--paper) !important;
     padding: 14px 18px !important;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease !important;
+    box-shadow: var(--shadow-sm) !important;
 }
-div[data-baseweb="input"] input {
+div[data-baseweb="input"] input,
+div[data-baseweb="textarea"] textarea {
     font-size: 17px !important;
     color: var(--ink) !important;
     font-family: 'Baloo 2', sans-serif !important;
 }
-div[data-baseweb="input"]:focus-within {
+div[data-baseweb="input"]:focus-within,
+div[data-baseweb="textarea"]:focus-within {
     border-color: var(--primary) !important;
-    box-shadow: 0 0 0 4px rgba(0, 176, 229, 0.15) !important;
+    box-shadow: 0 0 0 6px rgba(0, 176, 229, 0.25), 0 4px 12px rgba(0, 176, 229, 0.15) !important;
+    transform: translateY(-2px);
 }
 
-/* Radio buttons estilizados como cards SÍ / NO */
-div[data-testid="stRadio"] > label p,
-div[data-testid="stRadio"] > div > label p {
+/* Radio buttons estilizados como cards SÍ / NO (Centrados y mismo tamaño) */
+div[data-testid="stRadio"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div[data-testid="stRadio"] > label,
+div[data-testid="stRadio"] > label p {
     font-size: 16px !important;
     font-weight: 700 !important;
     color: var(--ink) !important;
     margin-bottom: 8px !important;
-}
-
-/* Grid 2 columnas — selectores con y sin stRadio wrapper según versión de Streamlit */
-div[data-testid="stRadio"] > div[role="radiogroup"],
-.stRadio > div[role="radiogroup"] {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
+    text-align: center !important;
     width: 100% !important;
-    flex-direction: unset !important;
-    align-items: unset !important;
 }
 
-/* Cada opción: card ancha centrada */
-div[data-testid="stRadio"] > div[role="radiogroup"] > label,
-div[data-testid="stRadio"] label,
-.stRadio > div[role="radiogroup"] > label {
+div[data-testid="stRadio"] div[role="radiogroup"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+@media (min-width: 400px) {
+    div[data-testid="stRadio"] div[role="radiogroup"] {
+        flex-direction: row !important;
+    }
+}
+
+div[data-testid="stRadio"] div[role="radiogroup"] label {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px !important;
     width: 100% !important;
+    max-width: 200px !important;
     min-height: 50px !important;
-    padding: 12px 8px !important;
+    padding: 12px 16px !important;
     border: 1.5px solid var(--border-light) !important;
     border-radius: var(--radius-sm) !important;
     background: var(--paper) !important;
@@ -399,71 +459,101 @@ div[data-testid="stRadio"] label,
     transition: all 0.2s ease !important;
     margin: 0 !important;
     box-sizing: border-box !important;
-    flex: unset !important;
+    flex: 1 !important;
+    box-shadow: none !important;
 }
 
-/* Texto: una sola línea, sin romper */
-div[data-testid="stRadio"] label > div:last-child,
-.stRadio > div[role="radiogroup"] > label > div:last-child {
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    color: var(--ink-soft) !important;
-    white-space: nowrap !important;
-    line-height: 1 !important;
-}
-
-/* Ocultar círculo nativo del radio */
-div[data-testid="stRadio"] label > div:first-child,
-div[data-testid="stRadio"] label div[data-baseweb="radio"],
-.stRadio > div[role="radiogroup"] > label div[data-baseweb="radio"] {
+/* Ocultar el input nativo */
+div[data-testid="stRadio"] div[role="radiogroup"] label > div:first-child {
     display: none !important;
 }
 
-/* Seleccionado: card azul, texto blanco */
-div[data-testid="stRadio"] label:has(input:checked),
-.stRadio > div[role="radiogroup"] > label[data-checked="true"] {
-    border-color: var(--primary) !important;
+/* Texto interno */
+div[data-testid="stRadio"] div[role="radiogroup"] label > div:last-child,
+div[data-testid="stRadio"] div[role="radiogroup"] label p {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: var(--ink-soft) !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin: 0 !important;
+}
+
+/* Efecto hover general */
+div[data-testid="stRadio"] div[role="radiogroup"] label:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-sm) !important;
+    border-color: rgba(0, 176, 229, 0.4) !important;
+}
+
+/* Efectos de selección (card activa) */
+div[data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
     background: var(--primary) !important;
+    border-color: var(--primary) !important;
     box-shadow: 0 4px 12px rgba(0, 176, 229, 0.25) !important;
 }
-div[data-testid="stRadio"] label:has(input:checked) > div:last-child,
-.stRadio > div[role="radiogroup"] > label[data-checked="true"] div {
+
+div[data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) > div:last-child,
+div[data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) p {
     color: white !important;
 }
 
-/* Hover en opción no seleccionada */
-div[data-testid="stRadio"] label:hover:not(:has(input:checked)),
-.stRadio > div[role="radiogroup"] > label:hover {
-    border-color: var(--primary) !important;
-    background: #f0fbff !important;
+div[data-testid="stRadio"] div[role="radiogroup"] label:nth-of-type(2):has(input:checked) {
+    background: #6b7280 !important;
+    border-color: #6b7280 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Iconos de check solo cuando están seleccionados */
+div[data-testid="stRadio"] div[role="radiogroup"] label:nth-of-type(1):has(input:checked) > div:last-child::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: -2px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+div[data-testid="stRadio"] div[role="radiogroup"] label:nth-of-type(2):has(input:checked) > div:last-child::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    vertical-align: -2px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 /* Form Submit Button */
-div[data-testid="stFormSubmitButton"] {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-md);
-}
 div[data-testid="stFormSubmitButton"] button {
     background: linear-gradient(135deg, #ff6b3d 0%, #f15a24 100%) !important;
     color: white !important;
     border-radius: var(--radius-pill) !important;
-    font-size: 1.5rem !important;
+    font-size: 1.6rem !important;
     font-family: 'Fredoka', sans-serif !important;
-    font-weight: 700 !important;
-    padding: 16px 24px !important;
-    border: none !important;
-    transition: all 0.2s ease !important;
+    font-weight: 800 !important;
+    padding: 18px 28px !important;
+    border: 3px solid #fff !important;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
     width: 100% !important;
-    box-shadow: 0 10px 24px rgba(241, 90, 36, 0.35) !important;
+    box-shadow: 0 12px 28px rgba(241, 90, 36, 0.4) !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     gap: 8px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.02em !important;
 }
 div[data-testid="stFormSubmitButton"] button:hover {
-    transform: translateY(-2px) scale(1.01) !important;
-    box-shadow: 0 14px 32px rgba(241, 90, 36, 0.45) !important;
+    transform: translateY(-4px) scale(1.03) !important;
+    box-shadow: 0 18px 36px rgba(241, 90, 36, 0.5) !important;
+    background: linear-gradient(135deg, #ff845e 0%, #f56d3b 100%) !important;
 }
 div[data-testid="stFormSubmitButton"] button:active {
     transform: translateY(0) scale(1) !important;
@@ -481,7 +571,7 @@ div[data-testid="stFormSubmitButton"] button:active {
     padding-top: 14px;
     margin-top: 28px;
     font-size: 0.8rem;
-    color: #888;
+    color: var(--ink-soft);
     font-weight: 500;
     font-family: 'Baloo 2', sans-serif;
 }
@@ -497,35 +587,47 @@ div[data-testid="stFormSubmitButton"] button:active {
     text-decoration: underline;
 }
 
-/* Alertas y Feedbacks (st.success, st.error) */
+/* Alertas y Feedbacks (Errores de Streamlit) */
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
 div[data-testid="stAlert"] {
     border-radius: var(--radius-md) !important;
     border: none !important;
-    box-shadow: var(--shadow-sm) !important;
+    border-left: 5px solid #ff4b4b !important;
+    box-shadow: var(--shadow-md) !important;
     padding: 16px 20px !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     font-family: 'Baloo 2', sans-serif !important;
-}
-/* Success */
-div[data-testid="stAlert"]:has(.st-emotion-cache-121o1ev) { /* Streamlit usa clases dinámicas, pero data-testid="stAlert" + contenido interno funciona. Mejor usamos la variable de CSS inyectada por st. */ }
-.stAlert {
-    border-radius: var(--radius-md) !important;
+    background-color: var(--paper-warm) !important;
+    color: var(--ink) !important;
+    animation: shakeError 0.5s ease-in-out;
 }
 
 /* Custom Success (inyectado) */
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.8); }
+  70% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .success-card {
-    background: #e8f5e9;
-    border: 2px solid #a5d6a7;
+    background: var(--paper-warm);
+    border: 2px solid var(--primary);
     border-radius: var(--radius-md);
     padding: 24px;
     text-align: center;
-    color: #2e7d32;
-    animation: fadePop 0.4s ease-out;
+    color: var(--ink);
+    box-shadow: var(--shadow-md);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 .success-icon svg {
     width: 64px;
     height: 64px;
-    stroke: #4caf50;
+    stroke: var(--primary);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -546,29 +648,57 @@ div[data-testid="stAlert"]:has(.st-emotion-cache-121o1ev) { /* Streamlit usa cla
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 8px;
+    color: var(--primary);
 }
 .success-text {
     font-size: 1.1rem;
     font-weight: 500;
 }
 
-/* Botón ghost — "Agregar al calendario" */
-div[data-testid="stDownloadButton"] button {
-    background: transparent !important;
-    border: 2px solid var(--primary) !important;
-    color: var(--primary) !important;
-    border-radius: var(--radius-pill) !important;
-    font-family: 'Baloo 2', sans-serif !important;
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    padding: 10px 24px !important;
-    width: 100% !important;
-    box-shadow: none !important;
-    transition: all 0.2s ease !important;
-    margin-bottom: 4px !important;
+/* ---------- BOTONES SECUNDARIOS ---------- */
+.secondary-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
 }
-div[data-testid="stDownloadButton"] button:hover {
-    background: var(--primary) !important;
-    color: white !important;
-    box-shadow: 0 6px 16px rgba(0, 176, 229, 0.25) !important;
+
+.secondary-actions .ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-pill);
+    color: var(--primary);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.secondary-actions .ghost-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 176, 229, 0.25);
+}
+
+.secondary-actions .ghost-btn svg {
+    flex-shrink: 0;
+}
+
+@media (max-width: 380px) {
+    .secondary-actions {
+        flex-direction: column;
+    }
+    .secondary-actions .ghost-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
