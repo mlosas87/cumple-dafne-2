@@ -66,7 +66,7 @@ def get_secret(key, default_value=""):
     return default_value
 
 DATABASE_URL_CONFIG = get_secret("DATABASE_URL", "")
-ADMIN_PASSWORD_CONFIG = get_secret("ADMIN_PASSWORD", "")
+ADMIN_PASSWORD_CONFIG = get_secret("ADMIN_PASSWORD", "cumpledafneadmin")
 
 if "temp_admin_password" not in st.session_state:
     st.session_state["temp_admin_password"] = ADMIN_PASSWORD_CONFIG
