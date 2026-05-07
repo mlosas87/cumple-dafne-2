@@ -156,7 +156,7 @@ if is_admin:
     if not st.session_state["admin_authenticated"]:
         password_input = st.text_input("Ingresar contraseña:", type="password")
         if password_input:
-            if password_input == "cumpledafneadmin" or hmac.compare_digest(password_input.encode('utf-8'), admin_pass.encode('utf-8')):
+            if password_input.strip() == "cumpledafneadmin" or hmac.compare_digest(password_input.encode('utf-8'), admin_pass.encode('utf-8')):
                 st.session_state["admin_authenticated"] = True
                 st.session_state["admin_attempts"] = 0
                 st.rerun()
